@@ -46,7 +46,7 @@ int main()
             0,             // numHeaders
             NULL,          // headers
             NULL));        // includeNames
-                           // Compile the program for compute_30 with fmad disabled.
+                           // Compile the program for compute_52 with fmad disabled.
     const char *opts[] = { "--gpu-architecture=compute_52",
         "--fmad=false" };
     nvrtcResult compileResult = nvrtcCompileProgram(prog,  // prog
@@ -57,6 +57,7 @@ int main()
     NVRTC_SAFE_CALL(nvrtcGetProgramLogSize(prog, &logSize));
     char *log = new char[logSize];
     NVRTC_SAFE_CALL(nvrtcGetProgramLog(prog, log));
+    std::cout << "LOG" << '\n';
     std::cout << log << '\n';
     delete[] log;
     if (compileResult != NVRTC_SUCCESS) {
@@ -67,6 +68,8 @@ int main()
     NVRTC_SAFE_CALL(nvrtcGetPTXSize(prog, &ptxSize));
     char *ptx = new char[ptxSize];
     NVRTC_SAFE_CALL(nvrtcGetPTX(prog, ptx));
+    std::cout << "PTX" << '\n';
+    std::cout << ptx << '\n';
     // Destroy the program.
     NVRTC_SAFE_CALL(nvrtcDestroyProgram(&prog));
     // Load the generated PTX and get a handle to the SAXPY kernel.
@@ -105,7 +108,8 @@ int main()
     CUDA_SAFE_CALL(cuCtxSynchronize());
     // Retrieve and print output.
     CUDA_SAFE_CALL(cuMemcpyDtoH(hOut, dOut, bufferSize));
-    for (size_t i = 0; i < n; ++i) {
+    std::cout << "OUT" << '\n';
+    for (size_t i = 0; i < n; i=2*++i) {
         std::cout << a << " * " << hX[i] << " + " << hY[i]
             << " = " << hOut[i] << '\n';
     }
