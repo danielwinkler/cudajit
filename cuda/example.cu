@@ -1,8 +1,8 @@
-
-#pragma once
-
-template<typename T>
-__device__
-inline T square(T x) {
-	return x*x;
+extern "C" __global__
+void saxpy(float a, float *x, float *y, float *out, size_t n)
+{
+  size_t tid = blockIdx.x * blockDim.x + threadIdx.x;
+  if (tid < n) {
+    out[tid] = a * x[tid] + y[tid];
+  }
 }

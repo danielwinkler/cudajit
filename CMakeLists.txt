@@ -11,6 +11,4 @@ else ()
     message(FATAL "TODO")
 endif ()
 
-message(${CMAKE_CUDA_STANDARD_LIBRARIES})
-
 add_executable(${PROJECT_NAME} ${CXX_SRCS})

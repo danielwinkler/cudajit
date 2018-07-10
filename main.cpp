@@ -1,5 +1,8 @@
 #include <nvrtc.h>
 #include <cuda.h>
+
+#include <fstream>
+#include <string>
 #include <iostream>
 
 #define NUM_THREADS 128
@@ -37,11 +40,15 @@ void saxpy(float a, float *x, float *y, float *out, size_t n)   \n\
 
 int main()
 {
+    std::ifstream fstr("C:/Users/daniel/dev/cudajit/cuda/example.cu");
+    std::string fsaxpy((std::istreambuf_iterator<char>(fstr)),
+        std::istreambuf_iterator<char>());
+
     // Create an instance of nvrtcProgram with the SAXPY code string.
     nvrtcProgram prog;
     NVRTC_SAFE_CALL(
         nvrtcCreateProgram(&prog,         // prog
-            saxpy,         // buffer
+            fsaxpy.c_str(),// buffer
             "saxpy.cu",    // name
             0,             // numHeaders
             NULL,          // headers
