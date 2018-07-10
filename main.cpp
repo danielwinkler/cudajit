@@ -40,7 +40,7 @@ void saxpy(float a, float *x, float *y, float *out, size_t n)   \n\
 
 int main()
 {
-    std::ifstream fstr("C:/Users/daniel/dev/cudajit/cuda/example.cu");
+    std::ifstream fstr("cuda/example.cu");
     std::string fsaxpy((std::istreambuf_iterator<char>(fstr)),
         std::istreambuf_iterator<char>());
 
